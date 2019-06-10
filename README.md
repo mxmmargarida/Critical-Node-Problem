@@ -2,6 +2,7 @@
 Multilevel Approaches for the Critical Node Problem
 
 Code for the paper 
+
 *A. Baggio, M. Carvalho, A. Lodi, A. Tramontani, "Multilevel Approaches for the Critical Node Problem", 2018.*
 http://cerc-datascience.polymtl.ca/wp-content/uploads/2017/11/Technical-Report_DS4DM-2017-012.pdf
 
