@@ -66,7 +66,6 @@ def Attack_Defend(V, A, Phi, Lambda, fileWR=None, goal = 0,name_hpr='HPR'):
         lin_expr = [cplex.SparsePair(ind = y_names.values(),val = [1]*len(V))],
         senses = ["L"],rhs = [Phi],names = ["Phi"])
     # Follower constraints
-    # Defender budget constraint
     model.linear_constraints.add(
         lin_expr = [cplex.SparsePair(ind = x_names.values(),val = [1]*len(V))],
         senses = ["L"],rhs = [Lambda],names = ["Lambda"])
@@ -100,7 +99,7 @@ def Attack_Defend(V, A, Phi, Lambda, fileWR=None, goal = 0,name_hpr='HPR'):
     f_auxfile.write("OS -1")
     f_auxfile.close()
 
-    # run Fischetti et al Algorithm
+    # run Matteo Fischetti, Ivana Ljubic, Michele Monaci and Markus Sinnl's Algorithm
     os.system("./bilevel -mpsfile " + name_hpr+'.mps' +" -time_limit 7200 -num_threads 1 > "+ name_hpr+"_output.txt")
     stats = {ind : "0" for ind in AD_STATS_IND}
     a_best = {v:0 for v in V}
@@ -159,82 +158,3 @@ if __name__ == "__main__":
    # print "value = " + str(opt)
    # print "status = " + str(status)
    # print "stats = " + str(stats)
-#
-#    # Test 2
-   N = 20
-   V = range(1, N+1)
-   A = []
-   for v in range(1, N):
-       A.append((v, v+1))
-       A.append((v+1, v))
-   Z = [3, 15]
-   V_red = [v for v in V if v not in Z]
-   A_red = [arc for arc in A if (arc[0] not in Z) and (arc[1] not in Z)]
-   Phi = 3
-   Lambda = 2
-   print "Test 2"
-   Y_opt, X_opt, a_opt, opt, status, stats = Attack_Defend(V_red, A_red, Phi, Lambda, None, 0, 'HPR-'+str(len(V)))
-   print "Y = " + str(Y_opt)
-   print "X = " + str(X_opt)
-   print "a = " + str({v: int(a_opt[v]) for v in V_red})
-   print "value = " + str(opt)
-   print "status = " + str(status)
-   print "stats = " + str(stats)
-#
-    # test 3
-#    V = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25]
-#    A = [(1, 21), (21, 1), (1, 23), (23, 1), (2, 4), (4, 2), (2, 10), (10, 2), (3, 22), (22, 3),
-#         (4, 11), (11, 4), (4, 25), (25, 4), (6, 16), (16, 6), (9, 25), (25, 9), (10, 11),
-#         (11, 10), (10, 14), (14, 10), (10, 25), (25, 10), (11, 12), (12, 11), (11, 21), (21, 11),
-#         (12, 15), (15, 12), (15, 20), (20, 15), (16, 19), (19, 16)]
-#    Phi = 3
-#    Lambda = 3
-#    print "Test 3"
-#    Y_opt, X_opt, a_opt, opt, status, stats = Attack_Defend(V, A, Phi, Lambda)
-#    print "Y = " + str(Y_opt)
-#    print "X = " + str(X_opt)
-#    print "a = " + str({v: int(a_opt[v]) for v in V})
-#    print "value = " + str(opt)
-#    print "status = " + str(status)
-#    print "stats = " + str(stats)
-
-
-    # test 3
-#    V = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-#         20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,
-#         36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50]
-#    A = [(2, 1), (1, 2), (3, 2), (2, 3), (4, 3), (3, 4), (6, 2), (2, 6), (9, 1),
-#         (1, 9), (10, 9), (9, 10), (11, 8), (8, 11), (12, 3), (3, 12), (13, 4),
-#         (4, 13), (14, 13), (13, 14), (16, 12), (12, 16), (18, 16), (16, 18),
-#         (19, 17), (17, 19), (20, 11), (11, 20), (21, 6), (6, 21), (22, 10), (10, 22),
-#         (23, 2), (2, 23), (24, 11), (11, 24), (25, 1), (1, 25), (26, 20), (20, 26),
-#         (27, 13), (13, 27), (28, 26), (26, 28), (29, 11), (11, 29), (30, 1),
-#         (1, 30), (31, 10), (10, 31), (32, 13), (13, 32), (33, 6), (6, 33), (34, 9),
-#         (9, 34), (35, 25), (25, 35), (36, 34), (34, 36), (37, 31), (31, 37), (39, 24),
-#         (24, 39), (40, 31), (31, 40), (41, 38), (38, 41), (42, 33), (33, 42), (43, 41), (41, 43),
-#         (44, 21), (21, 44), (45, 40), (40, 45), (46, 13), (13, 46), (47, 19), (19, 47),
-#         (48, 21), (21, 48), (49, 36), (36, 49), (50, 42), (42, 50)]
-#    Phi = 3
-#    Lambda = 3
-#    print "Test tree"
-#    Y_opt, X_opt, a_opt, opt, status, stats = Attack_Defend(V, A, Phi, Lambda)
-#    print "Y = " + str(Y_opt)
-#    print "X = " + str(X_opt)
-#    print "a = " + str({v: int(a_opt[v]) for v in V})
-#    print "value = " + str(opt)
-#    print "status = " + str(status)
-#    print "stats = " + str(stats)
-
-
-    # V = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50]
-    # A = [(1, 45), (45, 1), (2, 7), (7, 2), (2, 12), (12, 2), (2, 15), (15, 2), (3, 5), (5, 3), (3, 24), (24, 3), (3, 30), (30, 3), (3, 40), (40, 3), (3, 48), (48, 3), (4, 26), (26, 4), (5, 21), (21, 5), (5, 31), (31, 5), (5, 42), (42, 5), (6, 36), (36, 6), (6, 40), (40, 6), (7, 13), (13, 7), (7, 27), (27, 7), (7, 32), (32, 7), (8, 34), (34, 8), (9, 41), (41, 9), (10, 26), (26, 10), (10, 37), (37, 10), (11, 25), (25, 11), (11, 27), (27, 11), (11, 44), (44, 11), (11, 47), (47, 11), (12, 27), (27, 12), (12, 32), (32, 12), (12, 39), (39, 12), (13, 17), (17, 13), (13, 21), (21, 13), (13, 31), (31, 13), (13, 42), (42, 13), (14, 19), (19, 14), (14, 24), (24, 14), (14, 30), (30, 14), (14, 49), (49, 14), (15, 22), (22, 15), (15, 31), (31, 15), (16, 32), (32, 16), (17, 33), (33, 17), (17, 44), (44, 17), (18, 37), (37, 18), (19, 28), (28, 19), (19, 33), (33, 19), (20, 41), (41, 20), (20, 44), (44, 20), (21, 48), (48, 21), (22, 30), (30, 22), (23, 36), (36, 23), (25, 29), (29, 25), (25, 47), (47, 25), (27, 41), (41, 27), (28, 29), (29, 28), (28, 48), (48, 28), (29, 33), (33, 29), (31, 35), (35, 31), (35, 40), (40, 35), (37, 48), (48, 37), (46, 50), (50, 46)]
-    # Phi = 5
-    # Lambda = 3
-    #
-    # Y_opt, X_opt, a_opt, opt, status, stats = Attack_Defend(V, A, Phi, Lambda)
-    # print "Y = " + str(Y_opt)
-    # print "X = " + str(X_opt)
-    # print "a = " + str({v: int(a_opt[v]) for v in V})
-    # print "value = " + str(opt)
-    # print "status = " + str(status)
-    # print "stats = " + str(stats)
