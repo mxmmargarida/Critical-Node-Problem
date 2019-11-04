@@ -139,7 +139,7 @@ def Attack_Defend(V, A, Phi, Lambda, fileWR=None, goal = 0,name_hpr='HPR'):
 
 
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
 
    # Test 1
    # N = 20
