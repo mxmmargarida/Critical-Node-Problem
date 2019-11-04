@@ -187,7 +187,6 @@ def Defend_Attack_Defend(V, A, Omega, Phi, Lambda, fileWr = None):
             #          "has status code: " + str(sol.get_status()))
             value_best = int(round(sol.get_objective_value()))
             Z = [v for v in V if sol.get_values(z_names[v]) > 0.9]
-            #TODO: handle tolerance (102 status) and check the solution
         else:
             vprint("Problem has occurred in Defend-Attack-Defend!")
             vprint("Solution has status code: " + str(sol.get_status()))
