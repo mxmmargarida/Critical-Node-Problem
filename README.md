@@ -23,5 +23,5 @@ DAD_Fischetti.py implements both MCN$^{MIX++}$ and HIB (there is a parameter to 
 To run AD_Fischetti.py, it is necessary to install the following bilevel solver:
 https://msinnl.github.io/pages/bilevel.html
 
-All the python sripts depend on having an instalation of CPLEX.
+All the python scripts depend on having an instalation of CPLEX.
 
