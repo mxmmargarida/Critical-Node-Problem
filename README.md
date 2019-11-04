@@ -18,7 +18,7 @@ Generate_Instances.py enables the generation of new instances (running this scri
 
 DAD.py corresponds to the approach MCN of the paper and makes use of AD.py and D.py.
 
-DAD_Fischetti.py implements both MCN$^{MIX++}$ and HIB (there is a parameter to select one of these approaches) and makes use of AD_Fischetti.py and D.py.
+DAD_MIXi.py implements both MCN$^{MIX++}$ and HIB (there is a parameter to select one of these approaches) and makes use of AD_MIX.py and D.py.
 
 To run AD_Fischetti.py, it is necessary to install the following bilevel solver:
 https://msinnl.github.io/pages/bilevel.html
