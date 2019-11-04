@@ -220,24 +220,3 @@ def Attack_Defend(V, A, Phi, Lambda, fileWR=None, goal = 0, it_limit = 5000):
     # print "value = " + str(opt)
     # print "status = " + str(status)
     # print "stats = " + str(stats)
-
-    # Test 2
-    # N = 20
-    # V = range(1, N+1)
-    # A = []
-    # for v in range(1, N):
-    #     A.append((v, v+1))
-    #     A.append((v+1, v))
-    # Z = [3, 15]
-    # V_red = [v for v in V if v not in Z]
-    # A_red = [arc for arc in A if (arc[0] not in Z) and (arc[1] not in Z)]
-    # Phi = 3
-    # Lambda = 2
-    # print "Test 2"
-    # Y_opt, X_opt, a_opt, opt, status, stats = Attack_Defend(V_red, A_red, Phi, Lambda, None, 0)
-    # print "Y = " + str(Y_opt)
-    # print "X = " + str(X_opt)
-    # print "a = " + str({v: int(a_opt[v]) for v in V_red})
-    # print "value = " + str(opt)
-    # print "status = " + str(status)
-    # print "stats = " + str(stats)
