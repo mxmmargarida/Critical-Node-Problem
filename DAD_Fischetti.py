@@ -6,7 +6,7 @@ import timeit
 import os
 import cplex
 
-from AD_Fischetti import Attack_Defend as Attack_Defend_Fischetti
+from AD_MIX import Attack_Defend as Attack_Defend_MIX
 from AD import Attack_Defend
 
 DAD_STATS_IND = ("fail", "totTm", "lastADTm", "itDAD", "avItADGoal", "itADOpt")
@@ -94,7 +94,6 @@ def Defend_Attack_Defend(V, A, Omega, Phi, Lambda, fileWr = None, mix = False, A
     U = []
     status = 0
     cnt = 0
-    ###it_limit = 50
     while True:
         vprint("\nIteration -> " + str(cnt) + ":")
         # solve optimal Attack-Defend on V\Z
@@ -107,9 +106,9 @@ def Defend_Attack_Defend(V, A, Omega, Phi, Lambda, fileWr = None, mix = False, A
                 Y_opt, X_opt, a_opt, opt, AD_status, AD_stats = Attack_Defend(V_red, A_red, Phi, Lambda, fileWr, value_best-len(Z)-1, AD_it_limit)
                 if AD_status == 3: # iteration limit for AD reached
                     vprint("Iteration limit reached -> use Fischetti et al")
-                    Y_opt, X_opt, a_opt, opt, AD_status, AD_stats = Attack_Defend_Fischetti(V_red, A_red, Phi, Lambda, fileWr, value_best-len(Z)-1,'HPR-'+str(len(V))+str(mix))
+                    Y_opt, X_opt, a_opt, opt, AD_status, AD_stats = Attack_Defend_MIX(V_red, A_red, Phi, Lambda, fileWr, value_best-len(Z)-1,'HPR-'+str(len(V))+str(mix))
             else:
-                Y_opt, X_opt, a_opt, opt, AD_status, AD_stats = Attack_Defend_Fischetti(V_red, A_red, Phi, Lambda, fileWr, value_best-len(Z)-1, 'HPR-'+str(len(V))+str(mix))
+                Y_opt, X_opt, a_opt, opt, AD_status, AD_stats = Attack_Defend_MIX(V_red, A_red, Phi, Lambda, fileWr, value_best-len(Z)-1, 'HPR-'+str(len(V))+str(mix))
         except:
             raise Exception
         opt = opt + len(Z)
@@ -129,12 +128,6 @@ def Defend_Attack_Defend(V, A, Omega, Phi, Lambda, fileWr = None, mix = False, A
                 vprint("Solution has value %d:"%value_best)
                 status = 2
                 stats["fail"] = "itADLmt"
-                ### elif  cnt >= it_limit:
-                ###     vprint("\n\nDefend-Attack-Defend reached iteration limit " +
-                ###            "%d"%it_limit)
-                ###     vprint("Solution has value %d:"%value_best)
-                ###     status = 3
-                ###     stats["fail"] = "itDADLmt"
             stats["totTm"] = "%.3f"%(timeit.default_timer() - startTotTm)
             stats["lastADTm"] = AD_stats["totTm"]
             stats["itDAD"] = str(cnt+1)
@@ -190,12 +183,8 @@ def Defend_Attack_Defend(V, A, Omega, Phi, Lambda, fileWr = None, mix = False, A
         model.solve()
         sol = model.solution
         if sol.get_status() in [101, 102]:
-            #if sol.get_status() != 101:
-            #    print ("Solution in Defend-Attack-Defend %d"%(cnt+1) +
-            #          "has status code: " + str(sol.get_status()))
             value_best = int(round(sol.get_objective_value()))
             Z = [v for v in V if sol.get_values(z_names[v]) > 0.9]
-            #TODO: handle tolerance (102 status) and check the solution
         else:
             vprint("Problem has occurred in Defend-Attack-Defend!")
             vprint("Solution has status code: " + str(sol.get_status()))
@@ -203,47 +192,3 @@ def Defend_Attack_Defend(V, A, Omega, Phi, Lambda, fileWr = None, mix = False, A
         cnt = cnt + 1
     # END while
 
-
-if __name__ == "__main__":
-
-    # # Test 1
-    # N = 20
-    # V = range(1, N+1)
-    # A = []
-    # for v in range(1, N):
-    #     A.append((v, v+1))
-    #     A.append((v+1, v))
-    # Omega = 1
-    # Phi = 2
-    # Lambda = 2
-    # print "Test 1"
-    # f_xixi = open("xixi.txt",'w')
-    # Z_opt, Y_opt, X_opt, a_opt, opt, status, stats =\
-    #     Defend_Attack_Defend(V, A, Omega, Phi, Lambda,f_xixi)
-    # print "Z = " + str(Z_opt)
-    # print "Y = " + str(Y_opt)
-    # print "X = " + str(X_opt)
-    # print "a = " + str({v: int(a_opt[v]) for v in V})
-    # print "value = " + str(opt)
-    # print "status = " + str(status)
-    # print "stats = " + str(stats)
-
-    # Test 2
-    N = 25
-    V = range(1, N+1)
-    A = []
-    for v in range(1, N):
-        A.append((v, v+1))
-        A.append((v+1, v))
-    A.append((3,9))
-    A.append((9,3))
-    A.append((11,2))
-    A.append((2,11))
-    A.append((19,8))
-    A.append((8,19))
-    Omega = 2
-    Phi = 3
-    Lambda = 2
-    print "Test 2"
-    Z_opt, Y_opt, X_opt, a_opt, opt, status, stats =\
-        Defend_Attack_Defend(V, A, Omega, Phi, Lambda)
