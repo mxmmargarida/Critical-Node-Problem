@@ -12,7 +12,7 @@ The code was developed in python 2.7.
 
 In the folder Instances/, it can be found the instances used in the paper as well as extra information on the instances' solution.
 
-There are three folders for the randomly generated instances. In all these folders the instances under the same name are equal, but the computational information might vary as they were solved with different methods (see paper).
+There are three folders for the randomly generated instances. In all these folders the instances under the same name are equal, but the computational information might vary as they were solved with different methods (see paper). In tables_MNC.rar all instances can be found, while in the other folders some instances might not exist because the associated approach did not solved them within the imposed time limit.
 
 Generate_Instances.py enables the generation of new instances (running this script may overwrite files in Instances/).
 
