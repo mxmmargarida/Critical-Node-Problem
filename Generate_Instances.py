@@ -82,9 +82,9 @@ if __name__ == "__main__":
     from email.mime.text import MIMEText
     msg = MIMEText("Your computation is finished")
     msg['Subject'] = 'Results are out for type='+graphtype+" V="+str(N)+" budget = "+str(budgets)
-    me = 'server@superpowerful.chair' # fixed email
+    me = 'server@super.chair.ca' # fixed email
     msg['From'] = me
-    msg['To'] = "someone@umontreal.ca" # replace by your email
+    msg['To'] = "someone@domain.xyz" # replace by your email
     s = smtplib.SMTP('localhost')
-    s.sendmail(me, ["someone@umontreal.ca"], msg.as_string())
+    s.sendmail(me, ["someone@domain.xyz"], msg.as_string())
     s.quit()
