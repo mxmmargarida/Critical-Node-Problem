@@ -22,7 +22,7 @@ DAD.py corresponds to the approach MCN of the paper and makes use of AD.py and D
 
 DAD_MIXi.py implements both MCN$^{MIX++}$ and HIB (there is a parameter to select one of these approaches) and makes use of AD_MIX.py and D.py.
 
-To run AD_Fischetti.py, it is necessary to install the following bilevel solver:
+To run AD_MIX.py, it is necessary to install the following bilevel solver:
 https://msinnl.github.io/pages/bilevel.html
 
 All the python scripts depend on having an instalation of CPLEX.
