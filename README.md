@@ -14,16 +14,16 @@ In the folder Instances/, it can be found the instances used in the paper as wel
 
 There are three folders for the randomly generated instances. In all these folders the instances under the same name are equal, but the computational information might vary as they were solved with different methods (see paper). In tables_MNC.rar all instances can be found, while in the other folders some instances might not exist because the associated approach did not solved them within the imposed time limit.
 
-Generate_Instances.py enables the generation of new instances (running this script may overwrite files in Instances/).
+Generate_Instances.py enables the generation of new instances (running this script may overwrite files in Instances/) and it also provides the code to gather statistics on the solution approaches.
 
 ## Algorithms
 
 DAD.py corresponds to the approach MCN of the paper and makes use of AD.py and D.py.
 
-DAD_MIXi.py implements both MCN$^{MIX++}$ and HIB (there is a parameter to select one of these approaches) and makes use of AD_MIX.py and D.py.
+DAD_MIX.py implements both MCN$^{MIX++}$ and HIB (there is a parameter to select one of these approaches) and makes use of AD_MIX.py and D.py.
 
 To run AD_MIX.py, it is necessary to install the following bilevel solver:
 https://msinnl.github.io/pages/bilevel.html
 
-All the python scripts depend on having an instalation of CPLEX.
+All the python scripts depend on an instalation of CPLEX.
 
